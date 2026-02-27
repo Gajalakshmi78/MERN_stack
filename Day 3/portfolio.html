@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Personal portfolio</title>
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+<header>
+    <h1>Gajalakshmi</h1>
+    <p>
+        Hello! Iam <b>Gajalakshmi</b>,a passionate <b>Computer science student</b> who is
+        interested in web development.Iam learning <code>HTML</code> and enjoy building websites.I beleive in learning continously.
+        Iam pursuing my degree in B.Tech CSE
+    </p>
+</header>
+
+<nav>
+    <h2>Navigation</h2>
+    <ul>
+        <li><a href="#about">About Me</a></li>
+        <li><a href="#Skills">Skills</a></li>
+        <li><a href="academics">Academics</a></li>
+        <li><a href="#contact">Contact</a></li>
+    </ul>
+</nav>
+
+<section id="about">
+    <h2>About Me</h2>
+
+    <article>
+        <h3>My Goal</h3>
+        <p>
+            My goal is to become a skilled data analyst or full stack developer and work in the It Industry.
+            I want to build useful and user-friendly applications and websites.
+        </p>
+    </article>
+
+    <details>
+        <summary>More About Me</summary>
+        <p>
+            I enjoy learning new technologies,participating in seminars,and improving my technical skills and
+            Iam creating new projects and participating in various project expo
+        </p>
+    </details>
+</section>
+
+<section>
+     <h2>My interest</h2>
+
+     <h3>Hobbies</h3>
+     <ul>
+        <li>Reading</li>
+        <li>Sports</li>
+        <li>Exploring new technologies</li>
+        <li>Coding</li>
+     </ul>
+
+     <h3>Daily Activities</h3>
+     <ol>
+        <li>Studying</li>
+        <li>Practicing coding</li>
+        <li>Laerning new things</li>
+        <li>Revision</li>
+     </ol>
+</section>
+
+<section id="skills">
+    <h2>Skills</h2>
+
+    <p>HTML</p>
+    <Progress value="70" max="100"></Progress>
+
+    <p>Python</p>
+    <Progress value="80" max="100"></Progress>
+
+    <p>Java basics</p>
+    <Progress value="50" max="100"></Progress>
+</section>
+
+<section>
+    <h2>Media gallery</h2>
+<figure>
+    <img src="https://m.media-amazon.com/images/I/61O9VV-LZuL.jpg" alt="My profile image" width="200">
+    <figcaption>My profile image</figcaption>
+</figure>
+
+ <figure>
+        <audio controls>
+            <source src="audio.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+        <figcaption>My Favorite Audio</figcaption>
+    </figure>
+</section>
+
+<section id="academics">
+    <h2>Academic Details</h2>
+
+    <table border="5">
+        <caption>Academic Marks</caption>
+        <tr>
+            <th>Subject</th>
+            <th>Marks</th>
+            <th>Grade</th>
+        </tr>
+        <tr>
+            <td>Data Structures</td>
+            <td>85</td>
+            <td>A</td>
+        </tr>
+        <tr>
+            <td>Operating Systems</td>
+            <td>78</td>
+            <td>B+</td>
+        </tr>
+        <tr>
+            <td>Database Management</td>
+            <td>88</td>
+            <td>A</td>
+        </tr>
+        <tr>
+            <td>Software Engineering</td>
+            <td>90</td>
+            <td>A+</td>
+        </tr>
+    </table>
+</section>
+
+<section id="contact">
+    <h2>Contact Me</h2>
+
+    <form>
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name"><br><br>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email"><br><br>
+
+        <p>Gender:</p>
+        <label>
+            <input type="radio" name="gender" value="female"> Female
+        </label>
+        <label>
+            <input type="radio" name="gender" value="male"> Male
+        </label><br><br>
+
+        <p>Interests:</p>
+        <label>
+            <input type="checkbox" name="interest" value="coding"> Coding
+        </label>
+        <label>
+            <input type="checkbox" name="interest" value="music"> Music
+        </label>
+        <label>
+            <input type="checkbox" name="interest" value="reading"> Reading
+        </label><br><br>
+
+        <label for="contactmethod">Preferred Contact Method:</label>
+        <select id="contactmethod" name="contactmethod">
+            <option>Email</option>
+            <option>Phone</option>
+            <option>WhatsApp</option>
+        </select><br><br>
+
+        <input type="submit" value="Submit">
+    </form>
+</section>
+
+<footer>
+    <p>&copy; 2026 Gajalakshmi. All rights reserved.</p>
+</footer>
+
+</body>
+</html>
