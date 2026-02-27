@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<title>Notes Manager</title>
+
+<style>
+:root {
+  --bg:#f8f9fa; --text:#212529; --card:white; --border:#dee2e6;
+  --primary:#0d6efd; --danger:#b512ba; --success:#198754;
+}
+[data-theme="dark"] {
+  --bg:#212529; --text:#e9ecef; --card:#343a40; --border:#495057;
+  --primary:#6ea8fe; --danger:#ff6b6b; --success:#51cf66;
+}
+body {
+  font-family: system-ui;
+  background: var(--bg);
+  color: var(--text);
+  padding: 20px;
+}
+.container {
+  max-width: 700px;
+  margin: auto;
+}
+header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+#theme-toggle {
+  padding: 8px 16px;
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+form {
+  display: flex;
+  gap: 10px;
+}
+#note-input, #search {
+  width: 100%;
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--text);
+}
+#add-btn {
+  padding: 10px 20px;
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+#notes-list {
+  list-style: none;
+  padding: 0;
+  margin-top: 15px;
+  display: grid;
+  gap: 12px;
+}
+.note {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px;
+  cursor: grab;
+}
+.note.completed .text {
+  text-decoration: line-through;
+  opacity: 0.6;
+}
+.actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+}
+.btn {
+  border: none;
+  padding: 6px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  color: white;
+}
+.btn-complete { background: var(--success); }
+.btn-delete { background: var(--danger); }
+.color-picker {
+  width: 30px;
+  height: 30px;
+  border: none;
+  cursor: pointer;
+}
+#clear-completed {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background: var(--danger);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+#modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  justify-content: center;
+  align-items: center;
+}
+.modal-box {
+  background: var(--card);
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+}
+.modal-buttons {
+  margin-top: 15px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+</style>
+</head>
+
+<body>
+<div class="container">
+<header>
+  <h1>Notes Manager</h1>
+  <button id="theme-toggle">Dark Mode</button>
+</header>
+
+<form id="note-form">
+  <input id="note-input" placeholder="Type your note..." required>
+  <button id="add-btn">Add</button>
+</form>
+
+<input id="search" placeholder="Search notes...">
+
+<ul id="notes-list"></ul>
+
+<button id="clear-completed">Clear Completed</button>
+</div>
+
+<!-- Modal -->
+<div id="modal">
+  <div class="modal-box">
+    <h3>Clear all completed notes?</h3>
+    <div class="modal-buttons">
+      <button id="modal-no" class="btn" style="background:#6c757d">No</button>
+      <button id="modal-yes" class="btn btn-delete">Yes</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const form = document.getElementById("note-form");
+const input = document.getElementById("note-input");
+const list = document.getElementById("notes-list");
+const search = document.getElementById("search");
+const themeBtn = document.getElementById("theme-toggle");
+const clearBtn = document.getElementById("clear-completed");
+const modal = document.getElementById("modal");
+const modalYes = document.getElementById("modal-yes");
+const modalNo = document.getElementById("modal-no");
+
+let dragItem = null;
+
+/* Add Note */
+form.addEventListener("submit", e => {
+  e.preventDefault();
+  const li = document.createElement("li");
+  li.className = "note";
+  li.draggable = true;
+
+  li.innerHTML = `
+    <div class="text">${input.value}</div>
+    <div class="actions">
+      <input type="color" class="color-picker">
+      <button class="btn btn-complete">✓</button>
+      <button class="btn btn-delete">✕</button>
+    </div>
+  `;
+  list.appendChild(li);
+  input.value = "";
+});
+
+/* Event Delegation */
+list.addEventListener("click", e => {
+  const note = e.target.closest(".note");
+  if (!note) return;
+
+  if (e.target.classList.contains("btn-delete")) {
+    note.remove();
+  }
+  if (e.target.classList.contains("btn-complete")) {
+    note.classList.toggle("completed");
+  }
+});
+
+/* Color Change */
+list.addEventListener("change", e => {
+  if (e.target.classList.contains("color-picker")) {
+    e.target.closest(".note").style.background = e.target.value;
+  }
+});
+
+/* Edit on Double Click */
+list.addEventListener("dblclick", e => {
+  if (!e.target.classList.contains("text")) return;
+  const oldText = e.target.textContent;
+  const inputEdit = document.createElement("input");
+  inputEdit.value = oldText;
+  e.target.replaceWith(inputEdit);
+  inputEdit.focus();
+  inputEdit.addEventListener("blur", () => {
+    const div = document.createElement("div");
+    div.className = "text";
+    div.textContent = inputEdit.value;
+    inputEdit.replaceWith(div);
+  });
+});
+
+/* Drag & Drop */
+list.addEventListener("dragstart", e => {
+  dragItem = e.target;
+});
+list.addEventListener("dragover", e => {
+  e.preventDefault();
+  const target = e.target.closest(".note");
+  if (target && target !== dragItem) {
+    list.insertBefore(dragItem, target);
+  }
+});
+
+/* Search */
+search.addEventListener("input", () => {
+  const val = search.value.toLowerCase();
+  document.querySelectorAll(".note").forEach(n => {
+    n.style.display = n.textContent.toLowerCase().includes(val) ? "" : "none";
+  });
+});
+
+/* Theme Toggle */
+themeBtn.addEventListener("click", () => {
+  const html = document.documentElement;
+  html.dataset.theme = html.dataset.theme === "light" ? "dark" : "light";
+  themeBtn.textContent = html.dataset.theme === "light" ? "Dark Mode" : "Light Mode";
+});
+
+/* Modal */
+clearBtn.addEventListener("click", () => modal.style.display = "flex");
+modalNo.addEventListener("click", () => modal.style.display = "none");
+modalYes.addEventListener("click", () => {
+  document.querySelectorAll(".note.completed").forEach(n => n.remove());
+  modal.style.display = "none";
+});
+</script>
+<script src="object&array.js"></script>
+</body>
+</html>

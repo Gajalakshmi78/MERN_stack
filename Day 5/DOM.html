@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>JavaScript Practice – Complete Code</title>
+
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+  }
+
+  .product-card {
+    padding: 10px;
+    margin: 15px;
+  }
+
+  .menu li {
+    list-style: none;
+    padding: 5px;
+  }
+
+  .highlight {
+    background: rgb(196, 7, 111);
+  }
+
+  .card {
+    border: 1px solid #000;
+    padding: 10px;
+    margin: 5px;
+  }
+
+  .dark-mode {
+    background: #222;
+    color: #fff;
+  }
+
+  .swatch {
+    width: 30px;
+    height: 30px;
+    display: inline-block;
+    cursor: pointer;
+  }
+
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .modal {
+    background: white;
+    padding: 20px;
+    border-radius: 5px;
+  }
+</style>
+</head>
+
+<body>
+
+<h1 id="header-title">Header</h1>
+
+<!-- EASY -->
+<div class="product-card">Product 1</div>
+<div class="product-card">Product 2</div>
+
+<ul class="menu">
+  <li>Home</li>
+  <li>About</li>
+</ul>
+
+<div id="controls"></div>
+
+<!-- MEDIUM -->
+<div id="cart"></div>
+
+<img class="avatar" width="100">
+
+<div class="article-body">
+  <p>Paragraph 1</p>
+  <p>Paragraph 2</p>
+</div>
+
+<button id="theme-toggle">Toggle Theme</button>
+
+<div class="card">
+  <button data-action="delete">Delete Card</button>
+</div>
+
+<!-- TODO -->
+<h3>Todo List</h3>
+<input id="todo-input">
+<button id="add-todo">Add</button>
+<ul id="todo-list"></ul>
+
+<!-- EVENT DELEGATION -->
+<ul id="users-list">
+  <li data-user-id="101">John</li>
+  <li data-user-id="102">Mary</li>
+</ul>
+
+<!-- COUNTER -->
+<h3>Counter</h3>
+<button id="dec">-1</button>
+<span id="count">0</span>
+<button id="inc">+1</button>
+
+<!-- SEARCH -->
+<h3>Search</h3>
+<input id="search">
+<ul>
+  <li class="country">India</li>
+  <li class="country">Canada</li>
+  <li class="country">Germany</li>
+</ul>
+
+<!-- COLOR PICKER -->
+<h3>Color Picker</h3>
+<div class="swatch" data-color="#e74c3c" style="background:#e74c3c"></div>
+<div class="swatch" data-color="#3498db" style="background:#3498db"></div>
+<div class="swatch" data-color="#2ecc71" style="background:#2ecc71"></div>
+<div class="swatch" data-color="#a90a84" style="background:#a90a84"></div>
+
+<!-- SORTABLE -->
+<h3>Sortable List</h3>
+<ul id="sortable">
+  <li draggable="true">One</li>
+  <li draggable="true">Two</li>
+  <li draggable="true">Three</li>
+</ul>
+
+<!-- MODAL -->
+<button id="open-modal">Open Modal</button>
+
+<script>
+/* 1 */
+document.getElementById("header-title").innerText = "My Awesome Page";
+
+/* 2 */
+document.querySelectorAll(".product-card").forEach(c =>
+  c.style.border = "2px solid red"
+);
+
+/* 3 */
+document.querySelectorAll(".menu li").forEach(li =>
+  li.style.backgroundColor = "lightblue"
+);
+
+/* 4 */
+const btn = document.createElement("button");
+btn.innerText = "Click me!";
+document.getElementById("controls").appendChild(btn);
+
+/* 5 */
+const item = document.createElement("div");
+item.className = "item";
+item.innerHTML = "<span>Apple</span> <button>Remove</button>";
+document.getElementById("cart").appendChild(item);
+
+/* 6 */
+document.querySelector(".avatar").src =
+"https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d";
+
+/* 7 */
+document.querySelectorAll(".article-body > p")
+.forEach(p => p.classList.add("highlight"));
+
+/* 8 */
+document.getElementById("theme-toggle").onclick = () =>
+document.body.classList.toggle("dark-mode");
+
+/* 9 */
+document.querySelectorAll('[data-action="delete"]').forEach(b =>
+  b.onclick = () => b.closest(".card").remove()
+);
+
+/* 10 TODO */
+document.getElementById("add-todo").onclick = () => {
+  const li = document.createElement("li");
+  li.innerHTML = document.getElementById("todo-input").value +
+  ' <button>Delete</button>';
+  li.querySelector("button").onclick = () => li.remove();
+  document.getElementById("todo-list").appendChild(li);
+};
+
+/* 11 */
+document.getElementById("users-list").onclick = e => {
+  if (e.target.tagName === "LI")
+    console.log("Clicked user ID:", e.target.dataset.userId);
+};
+
+/* 12 */
+let count = 0;
+document.getElementById("inc").onclick = () =>
+document.getElementById("count").innerText = ++count;
+
+document.getElementById("dec").onclick = () => {
+  if (count > 0)
+    document.getElementById("count").innerText = --count;
+};
+
+/* 13 */
+document.getElementById("search").oninput = e => {
+  const t = e.target.value.toLowerCase();
+  document.querySelectorAll(".country").forEach(li =>
+    li.style.display = li.innerText.toLowerCase().includes(t) ? "" : "none"
+  );
+};
+
+/* 14 */
+document.querySelectorAll(".swatch").forEach(s =>
+  s.onclick = () => document.body.style.backgroundColor = s.dataset.color
+);
+
+/* 15 */
+let dragged;
+document.querySelectorAll("#sortable li").forEach(li => {
+  li.ondragstart = () => dragged = li;
+  li.ondragover = e => e.preventDefault();
+  li.ondrop = () => li.parentNode.insertBefore(dragged, li);
+});
+
+/* 16 */
+document.getElementById("open-modal").onclick = () => {
+  const overlay = document.createElement("div");
+  overlay.className = "modal-overlay";
+  overlay.innerHTML = `
+    <div class="modal">
+      <h2>Modal</h2>
+      <p>Hello World</p>
+      <button id="close">Close</button>
+    </div>`;
+  document.body.appendChild(overlay);
+
+  overlay.onclick = e => {
+    if (e.target === overlay || e.target.id === "close")
+      overlay.remove();
+  };
+};
+</script>
+
+</body>
+</html>
