@@ -1,0 +1,51 @@
+/* ===== FUTURISTIC GLOBAL RESET ===== */
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Root layout */
+html, body {
+  width: 100%;
+  height: 100%;
+
+  /* Smooth futuristic feel */
+  scroll-behavior: smooth;
+
+  /* Subtle dark gradient background */
+  background: radial-gradient(
+    circle at top,
+    #0f172a,
+    #020617
+  );
+
+  color: #e5e7eb;
+  font-family: "Segoe UI", "Inter", system-ui, sans-serif;
+
+  overflow-x: hidden;
+}
+
+/* App container */
+#root {
+  width: 100vw;
+  min-height: 100vh;
+
+  /* Center layout safely */
+  display: flex;
+  flex-direction: column;
+}
+
+/* Text selection effect */
+::selection {
+  background: rgba(56, 189, 248, 0.4);
+  color: #ffffff;
+}
+
+/* Smooth transitions */
+button, a, li {
+  transition: all 0.3s ease;
+}
