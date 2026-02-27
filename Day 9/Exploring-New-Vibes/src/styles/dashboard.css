@@ -1,0 +1,166 @@
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Poppins:wght@300;400;600&display=swap");
+
+/* Page transition */
+.fade-in {
+  animation: fadeIn 0.8s ease-in;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Dashboard background */
+.dashboard-page {
+  min-height: 100vh;
+  padding: 30px;
+  font-family: "Poppins", sans-serif;
+  background:
+    linear-gradient(rgba(60,0,80,0.65), rgba(10,0,30,0.85)),
+    url("https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=1600&q=80");
+  background-size: cover;
+  background-position: center;
+  color: white;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Floral sides */
+.dashboard-page::before,
+.dashboard-page::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  width: 180px;
+  height: 100%;
+  background: url("https://pngimg.com/uploads/flower/flower_PNG102.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+  opacity: 0.25;
+  pointer-events: none;
+}
+
+.dashboard-page::before { left: -40px; }
+.dashboard-page::after { right: -40px; transform: scaleX(-1); }
+
+/* Header */
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dashboard-header h1 {
+  font-family: "Playfair Display", serif;
+  font-size: 2.4rem;
+  color: #ffd6ff;
+}
+
+.logout-btn {
+  background: #ff4d6d;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+}
+
+/* Add box */
+.add-box {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 10px;
+  margin: 20px 0;
+}
+
+.add-box input,
+.search-box {
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  background: rgba(255,255,255,0.3);
+  color: #2b0040;
+  font-weight: 500;
+}
+
+.add-box button {
+  grid-column: span 2;
+  padding: 10px;
+  border-radius: 12px;
+  border: none;
+  background: linear-gradient(135deg, #c77dff, #ffafcc);
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* Search */
+.search-box {
+  margin: 20px auto;
+  display: block;
+  width: 280px;
+}
+
+/* Cards */
+.destinations-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+}
+
+.destination-card {
+  background: rgba(255,255,255,0.15);
+  backdrop-filter: blur(12px);
+  padding: 20px;
+  border-radius: 18px;
+  box-shadow: 0 0 25px rgba(199,125,255,0.25);
+  transition: transform 0.3s;
+}
+
+.destination-card:hover {
+  transform: translateY(-6px);
+}
+
+.destination-card h2 {
+  font-family: "Playfair Display", serif;
+  color: #fbc2eb;
+}
+
+/* Buttons */
+.actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.edit-btn {
+  background: linear-gradient(135deg, #a18cd1, #fbc2eb);
+  border: none;
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-weight: 600;
+}
+
+.delete-btn {
+  background: #ff4d4d;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 6px;
+  color: white;
+}
+
+/* Modal */
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background: rgba(255,255,255,0.25);
+  padding: 25px;
+  border-radius: 16px;
+  width: 300px;
+}

@@ -1,0 +1,74 @@
+{
+  "dreamTravelDestinations": [
+    {
+      "id": 1,
+      "destination": "Rome",
+      "country": "Italy",
+      "famousFor": ["Colosseum", "Roman Forum", "Ancient ruins"],
+      "bestTimeToVisit": "April to June"
+    },
+    {
+      "id": 2,
+      "destination": "Paris",
+      "country": "France",
+      "famousFor": ["Eiffel Tower", "Louvre Museum", "Historic streets"],
+      "bestTimeToVisit": "May to September"
+    },
+    {
+      "id": 3,
+      "destination": "Agra",
+      "country": "India",
+      "famousFor": ["Taj Mahal", "Mughal architecture"],
+      "bestTimeToVisit": "October to March"
+    },
+    {
+      "id": 4,
+      "destination": "Kyoto",
+      "country": "Japan",
+      "famousFor": ["Ancient temples", "Cherry blossoms", "Traditional culture"],
+      "bestTimeToVisit": "March to May"
+    },
+    {
+      "id": 5,
+      "destination": "Cairo",
+      "country": "Egypt",
+      "famousFor": ["Pyramids of Giza", "Ancient civilization"],
+      "bestTimeToVisit": "October to April"
+    },
+    {
+      "id": 6,
+      "destination": "Athens",
+      "country": "Greece",
+      "famousFor": ["Acropolis", "Greek history", "Mythology"],
+      "bestTimeToVisit": "April to October"
+    },
+    {
+      "id": 7,
+      "destination": "Machu Picchu",
+      "country": "Peru",
+      "famousFor": ["Inca ruins", "Mountain views"],
+      "bestTimeToVisit": "May to September"
+    },
+    {
+      "id": 8,
+      "destination": "Jaipur",
+      "country": "India",
+      "famousFor": ["Hawa Mahal", "Royal palaces", "Pink City"],
+      "bestTimeToVisit": "November to February"
+    },
+    {
+      "id": 9,
+      "destination": "Istanbul",
+      "country": "Turkey",
+      "famousFor": ["Hagia Sophia", "Historic mosques", "Cultural blend"],
+      "bestTimeToVisit": "April to May"
+    },
+    {
+      "id": 10,
+      "destination": "Petra",
+      "country": "Jordan",
+      "famousFor": ["Rock-cut architecture", "Ancient city"],
+      "bestTimeToVisit": "March to May"
+    }
+  ]
+}
