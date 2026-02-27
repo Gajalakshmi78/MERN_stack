@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Dream Travel Destinations - CRUD</title>
+
+  <style>
+    /* 🌌 Futuristic Travel Background */
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      min-height: 100vh;
+      padding: 20px;
+
+      /* Gradient + Travel Image */
+      background:
+        linear-gradient(
+          rgba(152, 8, 142, 0.55),
+          rgba(11, 195, 128, 0.55)
+        ),
+        url("https://images.unsplash.com/photo-1500530855697-b586d89ba3ee");
+
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      color: rgb(248, 15, 139);
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+      letter-spacing: 1px;
+    }
+
+    input {
+      padding: 10px;
+      margin: 5px;
+      border-radius: 6px;
+      border: none;
+      outline: none;
+      width: 200px;
+    }
+
+    button {
+      padding: 10px 14px;
+      margin: 5px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      background: linear-gradient(135deg, #00c6ff, #0072ff);
+      color: rgb(5, 181, 110);
+      font-weight: bold;
+    }
+
+    button:hover {
+      opacity: 0.9;
+    }
+
+    hr {
+      margin: 20px 0;
+      border-color: rgba(255,255,255,0.3);
+    }
+
+    /* 🧊 Glassmorphism Cards */
+    .card {
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-radius: 12px;
+      padding: 15px;
+      margin-top: 15px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+    }
+
+    .card h3 {
+      margin: 0;
+      color: #ffffff;
+    }
+
+    .card p {
+      margin: 5px 0;
+      color: #eaeaea;
+    }
+  </style>
+</head>
+<body>
+
+<h1>🌍 Dream Travel Destinations</h1>
+
+<!-- ADD / UPDATE FORM -->
+<input type="hidden" id="id">
+
+<input type="text" id="destination" placeholder="Destination">
+<input type="text" id="country" placeholder="Country">
+<input type="text" id="places" placeholder="Famous Places (comma separated)">
+
+<button onclick="addOrUpdate()">Save</button>
+
+<hr>
+
+<!-- DATA DISPLAY -->
+<div id="data"></div>
+
+<script>
+  const API = "http://localhost:5000/dreamTravelDestinations";
+
+  function loadData() {
+    fetch(API)
+      .then(res => res.json())
+      .then(data => {
+        const container = document.getElementById("data");
+        container.innerHTML = "";
+
+        data.forEach(item => {
+          const div = document.createElement("div");
+          div.className = "card";
+
+          div.innerHTML = `
+            <h3>${item.destination}</h3>
+            <p><b>Country:</b> ${item.country}</p>
+            <p><b>Places:</b> ${item.places?.join(", ") || "N/A"}</p>
+            <button onclick="editData(
+              ${item.id},
+              '${item.destination}',
+              '${item.country}',
+              '${(item.places || []).join(", ")}'
+            )">Edit</button>
+            <button onclick="deleteData(${item.id})">Delete</button>
+          `;
+
+          container.appendChild(div);
+        });
+      });
+  }
+
+  function addOrUpdate() {
+    const id = document.getElementById("id").value;
+    const destination = document.getElementById("destination").value;
+    const country = document.getElementById("country").value;
+    const placesInput = document.getElementById("places").value;
+
+    if (!destination || !country || !placesInput) {
+      alert("Please fill all fields");
+      return;
+    }
+
+    const data = {
+      destination,
+      country,
+      places: placesInput.split(",").map(p => p.trim())
+    };
+
+    if (id) {
+      fetch(`${API}/${id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
+      }).then(loadData);
+    } else {
+      fetch(API, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
+      }).then(loadData);
+    }
+
+    clearForm();
+  }
+
+  function deleteData(id) {
+    fetch(`${API}/${id}`, {
+      method: "DELETE"
+    }).then(loadData);
+  }
+
+  function editData(id, destination, country, places) {
+    document.getElementById("id").value = id;
+    document.getElementById("destination").value = destination;
+    document.getElementById("country").value = country;
+    document.getElementById("places").value = places;
+  }
+
+  function clearForm() {
+    document.getElementById("id").value = "";
+    document.getElementById("destination").value = "";
+    document.getElementById("country").value = "";
+    document.getElementById("places").value = "";
+  }
+
+  loadData();
+</script>
+
+</body>
+</html>
